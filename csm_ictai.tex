@@ -3,12 +3,16 @@
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
-\usepackage{algorithm,algorithmic}
+\usepackage{algorithmic}
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
 		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+
+\usepackage{subfig}
+\usepackage{algorithm}
 
 
 
@@ -182,7 +186,9 @@
 	instance $T$ belongs to is written as $L(T)$. It is inevitable that the action layer and
 	the observation layer appears alternately when tree grows (see Figure~\ref{fig:suffix tree}).
 	
-	\begin{figure}[h]
+	
+	
+	\begin{figure}[htbp]
 		\centering
 		\includegraphics[width=0.45\textwidth]{usm_sample.jpg}
 		\caption{The agent navigates itself in a maze (probably not the first time), generates
@@ -190,6 +196,8 @@
 			the observation layer appear alternately.}
 		\label{fig:suffix tree}
 	\end{figure}
+	
+	
 	
 	Besides the general nodes, there is another type of node called "fringe" node \cite{mccallum1995instance}.
 	The fringe nodes are actually the deepest layers of the suffix tree, however, we treated them
@@ -402,29 +410,34 @@
 	normally includes: moving south, west, east and north. However, problems differ in some
 	details.
 	
-	\begin{figure}[h]
+	\begin{figure}[htbp]
 		\centering
 		\includegraphics[width=0.45\textwidth]{mazes.png}
 		\caption{Benchmark mazes}
 		\label{fig:mazes}
 	\end{figure}
-	
-%	\begin{table}[h]
-%		\caption{Benchmarks}
-%		\label{table:benchmarks}
-%		\centering
-%		\begin{tabular}{lllllll}
-%			\toprule
-%			problem         & $|S|$          & $|A|$          & $|\Omega|$  &$r_d$  &$r_p$  &$r_g$\\
-%			\midrule
-%			Tiger-Grid      & 9              & 4              & 7           & -0.1  & -4    & 16  \\
-%			Hallway         & 15             & 4              & 4           & -0.1  &     & 32  \\
-%			McCallum        & 23             & 4              & 9           & -0.1  &     & 18  \\
-%			Prim Maze       & 154            & 4              & 16          & -0.1  &    & 96  \\
-%			\bottomrule
-%		\end{tabular}
-%	\end{table}
-	
+
+
+\begin{table}[htbp]
+	\caption{Benchmarks}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline
+			\textbf{Problem}&\textbf{$|S|$}&\textbf{$|A|$}&\textbf{$|\Omega|$}&\textbf{$r_d$}&\textbf{$r_p$}&\textbf{$r_g$}	\\
+			\hline
+			\textbf{Tiger-Grid}&9      & 4              & 7           & -0.1  & -4    & 16  \\
+%			\hline
+			\textbf{Hallway}         & 15             & 4              & 4           & -0.1  &     & 32  \\
+%			\hline
+			\textbf{McCallum}       & 23             & 4              & 9           & -0.1  &     & 18  \\
+%			\hline
+			\textbf{Prim Maze}       & 154            & 4              & 16          & -0.1  &    & 96  \\
+			\hline
+		\end{tabular}
+		\label{table:benchmarks}
+	\end{center}
+\end{table}
+
 	In Tiger-Grid, the agents are initially assigned to one of two definite starting positions.
 	The probability of each starting position is 0.5. The goal of the model is to make the agent
 	reach the goal position as soon as possible. Once the agent reaches the goal position,
@@ -465,16 +478,16 @@
 	Therefore, we record ($ADR$, time) tuples in the table below (see Table \ref{table:results}), when $ADR$ starts
 	to become relatively stationary, rather than when $ADR$ gets maximum. 
 	
-%	\begin{figure}[!h]
-%		\centering
-%		\subfloat[Tiger Grid]{\includegraphics[width=2.8in]{06-13-21-48/tiger_grid_result.png}}\\
-%		\subfloat[Hallway]{\includegraphics[width=2.8in]{06-13-21-48/hallway_result.png}}\\
-%		\subfloat[McCallum]{\includegraphics[width=2.8in]{06-13-21-48/mccallum_result.png}}\\
-%		\subfloat[Prim Maze]{\includegraphics[width=2.8in]{06-13-21-48/prim_maze_result.png}}\\
-%		\caption{Performance of different agent on different benchmarks; y-axis is $ADR$,
-%			x-axis is runtime in seconds.}
-%		\label{fig:agent_adr_time}
-%	\end{figure}
+	\begin{figure}[htbp]
+		\centering
+		\subfloat[Tiger Grid]{\includegraphics[width=2.8in]{06-13-21-48/tiger_grid_result.png}}\\
+		\subfloat[Hallway]{\includegraphics[width=2.8in]{06-13-21-48/hallway_result.png}}\\
+		\subfloat[McCallum]{\includegraphics[width=2.8in]{06-13-21-48/mccallum_result.png}}\\
+		\subfloat[Prim Maze]{\includegraphics[width=2.8in]{06-13-21-48/prim_maze_result.png}}\\
+ \caption{Performance of different agent on different benchmarks; y-axis is $ADR$,
+			x-axis is runtime in seconds.}
+		\label{fig:agent_adr_time}
+	\end{figure}
 %	
 %	\begin{table}[h]
 %		\caption{The Comparison of time and $ADR$ between USM and CSM}
@@ -493,6 +506,30 @@
 %			\bottomrule
 %		\end{tabular}
 %	\end{table}
+	\begin{table}[htbp]
+		\caption{Table Type Styles}
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+				\hline
+				&\multicolumn{2}{|c|}{\textbf{ADR}} &\multicolumn{2}{|c|}{\textbf{Time}} \\
+				\hline
+				\textbf{Problem}      & USM         & CSM               &USM           & CSM      \\
+				\hline
+				Tiger-Grid    & 3.81        & 8.70              & 10.75        & 9.45     \\ 
+				%\hline
+				Hallway       & 8.43        & 10.13             & 13.52        & 6.67     \\ 
+			%	\hline
+				McCallum      & 2.82        & 5.90              & 34.39        & 14.15    \\ 
+			%	\hline
+				Prim Maze     & 7.13        & 8.30              & 49.30        & 18.24    \\ 
+				\hline
+			\end{tabular}
+			
+			\label{tab1}
+		\end{center}
+	\end{table}
+	
+	
 	
 	In Tiger-Grid, CSM algorithm quickly reached a very high $ADR$ in a short
 	time after the start of the experiment. As the experiment progressed, the $ADR$ of
@@ -553,14 +590,11 @@
 	to be considered. 
 	
 	
-	
-	
-	% References
+% References
 %	\clearpage
 %	\small
-%	\bibliographystyle{named}
-%	\bibliography{dai_2019}
+	\bibliographystyle{./IEEEtran}
+	\bibliography{./IEEEabrv,./csm_ictai}
 
-	
-	
+
 \end{document}
