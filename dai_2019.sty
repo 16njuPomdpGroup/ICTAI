@@ -1,0 +1,252 @@
+%% Style file for the International Conference on Distributed 
+%% Artificial Intelligence (DAI).
+%% 
+%% Created by Song Zuo <szuo@google.com> at 2019/03/17
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{dai_2019}[2019/10/13 DAI 2019 submission/camera-ready style file]
+\def\dai{Distributed Artificial Intelligence\xspace}
+
+\RequirePackage{fancyhdr}
+\RequirePackage{color}
+\RequirePackage{algorithm}
+\RequirePackage{algorithmic}
+\RequirePackage{amsmath}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[tt=false,type1=true]{libertine}
+\RequirePackage[varqu]{zi4}
+\RequirePackage[libertine]{newtxmath}
+\RequirePackage{courier}
+\RequirePackage{graphicx}
+\RequirePackage[numbers,sort&compress]{natbib}
+\RequirePackage{xspace}
+
+% for camera-ready
+\newif\if@daifinal\@daifinalfalse
+\DeclareOption{final}{
+  \@daifinaltrue
+}
+
+\ProcessOptions\relax
+
+\newif\if@submission\@submissiontrue
+\if@daifinal\@submissionfalse\fi
+
+% change this every year for notice string at bottom
+\newcommand{\@daiordinal}{1st}
+\newcommand{\@daiyear}{2019}
+\newcommand{\@dailocation}{Beijing, China}
+
+% different notice strings for final and submission
+\if@daifinal
+  \newcommand{\@noticestring}{%
+    The \@daiordinal\/ International Conference on \dai (DAI \@daiyear),
+    \@dailocation.%
+  }
+\else
+  \newcommand{\@noticestring}{%
+    In submission to the \@daiordinal\/ International Conference on \dai (DAI \@daiyear).
+    Do not distribute.%
+  }
+  \ifdefined\hypersetup
+    \hypersetup{pdfauthor={Anonymous Submission}}
+  \fi
+\fi
+ 
+%hyperref
+\ifdefined\hypersetup
+  \definecolor{dailinkcolor}{rgb}{0.25,0.05,0.5}
+  \hypersetup{colorlinks=true,linkcolor=dailinkcolor,
+              citecolor=dailinkcolor,filecolor=dailinkcolor,urlcolor=dailinkcolor}
+\fi
+
+% paper size and margins
+\paperwidth=8.5in
+\paperheight=11in
+
+\evensidemargin -0.23in  
+\oddsidemargin -0.23in 
+\setlength\textheight{9.0in}
+\setlength\textwidth{6.75in} 
+\setlength\columnsep{0.25in}
+\setlength\headheight{10pt}
+\setlength\headsep{10pt} 
+\addtolength{\topmargin}{-20pt}
+\addtolength{\topmargin}{-0.29in}
+
+\flushbottom \twocolumn \sloppy
+
+% fontsizes
+\renewcommand{\normalsize}{%
+  \@setfontsize\normalsize\@xpt\@xipt
+  \abovedisplayskip      7\p@ \@plus 2\p@ \@minus 5\p@
+  \abovedisplayshortskip \z@ \@plus 3\p@
+  \belowdisplayskip      \abovedisplayskip
+  \belowdisplayshortskip 4\p@ \@plus 3\p@ \@minus 3\p@
+}
+\normalsize
+\renewcommand{\small}{\@setfontsize\small\@ixpt\@xpt}
+\renewcommand{\footnotesize}{\@setfontsize\footnotesize\@ixpt\@xpt}
+\renewcommand{\scriptsize}{\@setfontsize\scriptsize\@viipt\@viiipt}
+\renewcommand{\tiny}{\@setfontsize\tiny\@vipt\@viipt}
+\renewcommand{\large}{\@setfontsize\large\@xiipt{14}}
+\renewcommand{\Large}{\@setfontsize\Large\@xivpt{16}}
+\renewcommand{\LARGE}{\@setfontsize\LARGE\@xviipt{20}}
+\renewcommand{\huge}{\@setfontsize\huge\@xxpt{23}}
+\renewcommand{\Huge}{\@setfontsize\Huge\@xxvpt{28}}
+
+% sections
+\def\section{\@startsection{section}{1}{\z@}%
+{-2.0ex \@plus -0.5ex \@minus -0.2ex}%
+{ 1.5ex \@plus  0.3ex \@minus  0.2ex}%
+{\large\bf\raggedright}}
+
+\def\subsection{\@startsection{subsection}{2}{\z@}%
+{-1.8ex \@plus -0.5ex \@minus -0.2ex}%
+{ 0.8ex \@plus  0.2ex}%
+{\normalsize\bf\raggedright}}
+
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+{-1.5ex \@plus -0.5ex \@minus -0.2ex}%
+{ 0.5ex \@plus  0.2ex}%
+{\normalsize\bf\raggedright}}
+
+\def\paragraph{\@startsection{paragraph}{4}{\z@}%
+{1.5ex \@plus 0.5ex \@minus 0.2ex}{-1em}%
+{\normalsize\bf}}
+
+\def\subparagraph{\@startsection{subparagraph}{5}{\z@}%
+{1.5ex \@plus 0.5ex \@minus 0.2ex}{-1em}%
+{\normalsize\bf}}
+
+\def\subsubsubsection{\vskip 5pt%
+{\noindent\normalsize\rm\raggedright}}
+
+% floats
+\renewcommand{\topfraction      }{0.85}
+\renewcommand{\bottomfraction   }{0.4}
+\renewcommand{\textfraction     }{0.1}
+\renewcommand{\floatpagefraction}{0.7}
+
+\setlength{\abovecaptionskip}{7\p@ \@plus 2\p@ \@minus 5\p@}
+\setlength{\belowcaptionskip}{\abovecaptionskip}
+
+% footnote
+\setlength{\footnotesep }{6.65\p@}
+\setlength{\skip\footins}{9\p@ \@plus 4\p@ \@minus 2\p@}
+\renewcommand{\footnoterule}{\kern-3\p@ \hrule width 9pc \kern 2.6\p@}
+\setcounter{footnote}{0}
+
+% paragraph
+\setlength{\parindent}{\z@}
+\setlength{\parskip  }{5.5\p@}
+
+% list 
+\setlength{\topsep       }{4\p@ \@plus 1\p@   \@minus 2\p@}
+\setlength{\partopsep    }{1\p@ \@plus 0.5\p@ \@minus 0.5\p@}
+\setlength{\itemsep      }{2\p@ \@plus 1\p@   \@minus 0.5\p@}
+\setlength{\parsep       }{2\p@ \@plus 1\p@   \@minus 0.5\p@}
+\setlength{\leftmargin   }{2em}
+\setlength{\leftmargini  }{\leftmargin}
+\setlength{\leftmarginii }{2em}
+\setlength{\leftmarginiii}{1.5em}
+\setlength{\leftmarginiv }{1.0em}
+\setlength{\leftmarginv  }{0.5em}
+\setlength{\leftmarginvi }{0.5em}
+\def\@listi  {\leftmargin\leftmargini}
+\def\@listii {\leftmargin\leftmarginii
+              \labelwidth\leftmarginii
+              \advance\labelwidth-\labelsep
+              \topsep    1\p@ \@plus 0.5\p@ \@minus 0.5\p@
+              \parsep    \z@
+              \partopsep 0.5\p@ \@plus 0\p@ \@minus 0.5\p@
+              \itemsep \topsep}
+\def\@listiii{\leftmargin\leftmarginiii
+              \labelwidth\leftmarginiii
+              \advance\labelwidth-\labelsep}
+\def\@listiv {\leftmargin\leftmarginiv
+              \labelwidth\leftmarginiv
+              \advance\labelwidth-\labelsep}
+\def\@listv  {\leftmargin\leftmarginv
+              \labelwidth\leftmarginv
+              \advance\labelwidth-\labelsep}
+\def\@listvi {\leftmargin\leftmarginvi
+              \labelwidth\leftmarginvi
+              \advance\labelwidth-\labelsep}
+
+% create title
+\providecommand{\maketitle}{}
+\renewcommand{\maketitle}{%
+  \par
+  \begingroup
+    \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+    \renewcommand{\@makefnmark}{\hbox to 0pt{$^{\@thefnmark}$\hss}}
+    \long\def\@makefntext##1{\parindent 1em\noindent\hbox to 1.8em{\hss $\m@th ^{\@thefnmark}$}##1}
+    \thispagestyle{empty}
+    \twocolumn[\@maketitle]
+    \@thanks
+    \@notice
+  \endgroup
+  \setcounter{footnote}{0} 
+  \let\maketitle\relax
+  \let\thanks\relax
+}
+
+\providecommand{\@maketitle}{}
+\renewcommand{\@maketitle}{%
+  \vbox{%
+    \hsize\textwidth
+    \linewidth\hsize
+    \centering
+    {\LARGE\bf \@title\par}
+    \vskip 0.1in \@minus 0.05in 
+    \if@submission
+    \begin{tabular}[t]{c}\large\bf\rule{\z@}{24\p@}
+      Anonymous Author(s) \\
+    \end{tabular}%
+    \else
+      \def\and{\unskip\enspace{\rm and}\enspace}% 
+      \def\And{%
+        \end{tabular}\hfil\linebreak[0]\hfil%
+        \begin{tabular}[t]{c}\large\bf\rule{\z@}{24\p@}\ignorespaces}%
+      \def\AND{%
+        \end{tabular}\hfil\linebreak[4]\hfil%
+        \begin{tabular}[t]{c}\large\bf\rule{\z@}{24\p@}\ignorespaces}%
+      \begin{tabular}[t]{c}\large\bf\rule{\z@}{24\p@}\@author\end{tabular}%
+    \fi
+    \vskip 0.2in \@minus 0.075in
+  }
+}
+
+% conference notice
+\newcommand{\ftype@noticebox}{8}
+\newcommand{\@notice}{%
+  \enlargethispage{2\baselineskip}%
+  \@float{noticebox}[b]%
+    \footnotesize\@noticestring%
+  \end@float%
+}
+
+% abstract
+\renewenvironment{abstract}{%
+  \centerline{\large\bf Abstract}%
+  \vspace{0.5ex}%
+  \bgroup\addtolength\leftmargini{-0.1in}%
+  \begin{quote}%
+    \small
+}{%
+  \par%
+  \end{quote}%
+  \egroup
+  \vskip 1ex%
+}
+
+\endinput
