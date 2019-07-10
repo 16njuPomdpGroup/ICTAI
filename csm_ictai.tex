@@ -40,12 +40,6 @@
 			\textit{Nanjing University}\\
 			Nanjing, China \\
 			paulwongpang@foxmail.com}
-		\and
-		\IEEEauthorblockN{Chongjun Wang}
-		\IEEEauthorblockA{\textit{Software Institute} \\
-			\textit{Nanjing University}\\
-			Nanjing, China\\
-			chjwang@nju.edu.cn}
 	}
 	
 	\maketitle
@@ -53,13 +47,13 @@
 	\begin{abstract}
 		Instance-based approaches are effective ways to solve reinforcement learning problems.
 		Utile Suffix Memory (USM) algorithm has shown decent results for distinguishing different
-		states from instance chains and generating Q-value of actions of each state, but involving
+		states from instance chains and making decisions according to the generated Q-value, but involving
 		exponentially expanded state space and a number of redundant states. In this paper we
 		propose a new state space compressed algorithm, called Compressed Suffix Memory (CSM)
 		algorithm. CSM algorithm obtains heuristic information of the environment by a blind
-		exploration, for example, the maximum L1 distance between instances in instance chains
+		exploration, such as, the maximum L1 distance between instances in instance chains
 		and goal frequencies, to improve efficiency and resist overfitting. Boltzmann sampling
-		is adopted to balance between exploration and exploitation. Experiments show that both
+		is adopted to balance between exploration and exploitation. The experiments show that both
 		the efficiency and the effect have been improved a lot by CSM algorithm compared with
 		USM algorithm.
 	\end{abstract}
@@ -86,8 +80,8 @@
 	Many instance-based methods have been put forward, including Nearest Sequence
 	Memory (NSM) algorithm \cite{mccallum1997reinforcement} and Utile Suffix Memory
 	(USM) algorithm \cite{mccallum1995instance}. USM algorithm presents the state space by
-	tree-nodes in a suffix tree building from the instance chains, and is proved
-	effective maximizing the Q-value of actions. However, the state space of USM
+	tree-nodes in a suffix tree building from the instance chains, and effectively
+	makes decisions according to the Q-value of actions. However, the state space of USM
 	algorithm exponentially expands during iteration and comprises many redundant
 	states, which reduces the efficiency. Furthermore, because the $\epsilon$-greedy
 	policy of USM lacks of the exploitation of overall information, it may lead to
@@ -100,9 +94,9 @@
 	and $p$ as the probability of goal during the exploration. Second, the maximum
 	depth of the suffix tree is limited to $2l$ and the minimum instances required
 	to trigger state splitting, the threshold $b$, is deduced from $p$. Finally, after initializing the agent
-	with a random policy, Boltzmann sampling approach will be applied. Experiment has shown
-	that both the efficiency and the effect have been greatly improved by CSM algorithm compared
-	with USM algorithm.
+	with a random policy, Boltzmann sampling approach will be applied. Experiment
+	results of four benchmarks have shown that both the efficiency and the effect
+	have been greatly improved by CSM algorithm compared with USM algorithm.
 	
 	The paper outline follows. We will briefly review reinforcement in partially observable
 	environment and Utile Suffix Memory (USM) algorithm, in Section 2.
@@ -138,12 +132,12 @@
 	
 	When the model is successfully learned, i.e., all elements of the 7-tuple are
 	generated to fit the problem, there are plenty of algorithms to calculate a best
-	policy \cite{shani2013survey}. However, in model-free methods, an agent can learn
-	with trail-and-error from experience directly and a policy can generated before
-	grasping all information of a model \cite{li2017deep}, which is normally faster
-	and more suitable real time problem.  An important way to implement model-free
+	policy \cite{shani2013survey}. However, generating a model may be time consuming.
+	In model-free methods, an agent can learn with trail-and-error from experience directly
+	and a policy can generated before grasping all information of a model \cite{li2017deep},
+	which is normally faster and more suitable real time problem. An important way to implement model-free
 	methods is to make an agent comprise some sort of internal memory \cite{aberdeen2003policy,
-		meuleau1999learning, mccallum1995instance} (see Fig.~\ref{fig:agent memory}).
+	meuleau1999learning, mccallum1995instance} (see Fig.~\ref{fig:agent memory}).
 	For example, the states of a model can be expressed by some nearest observations
 	and internal states of an agent. After learning the state space, the agent can make
 	decisions using model-free methods, such as HQ-learning \cite{wiering1997hq}.
@@ -168,7 +162,7 @@
 	\cite{mccallum1995instance}. At each time step $t$, the agent executes action
 	$a_t \in A$ to get a new instance, gets observation $o_{t+1} \in O$, and get a
 	instant reward $r_{t+1}$ according to $R$, which is determined by the environment.
-	A new instance is formulated as
+	A instance can be formulated as
 	\begin{equation}
 	T_{t+1}= (T_t, a_t, o_{t+1}, r_{t+1}). \label{equ:instance}
 	\end{equation}
@@ -200,12 +194,12 @@
 	
 	
 	Besides the general nodes, there is another type of node called "fringe" node \cite{mccallum1995instance}.
-	The fringe nodes are actually the deepest layers of the suffix tree, however, we treated them
+	The fringe nodes are actually the deepest layers of the suffix tree, however, they are treated as 
 	the inner instance buckets of the leaves previously mentioned. Fringe nodes also contain
 	instances according to the same suffix criterion used by non-fringe nodes. That is, 
 	if the suffix of a leaf is $[a_{t-2}, o_{t-1}, a_{t-1}]$, an 1-layer deeper fringe nodes of it
 	will stores the instance that matches suffix $[o_{t-2}, a_{t-2}, o_{t-1}, a_{t-1}]$. The agent decides
-	whether it should promote fringe nodes to leaves by Kolmogorov-Smirnov test, which determine the
+	whether it should promote fringe nodes to leaves according to Kolmogorov-Smirnov test, which determine the
 	instances in the fringes and that of their parent are drawn the same distribution.
 	
 	The steps of USM algorithm is as below:
@@ -229,14 +223,14 @@
 	
 	There are two obvious deficiencies of USM algorithm. Firstly, in USM algorithm,
 	the number of states may exponentially increase as the number of steps grows, but many
-	states are redundant, which correspond to the same state in the real environment. Thus, it
-	will reduce the efficiency of the algorithm. Secondly, since the initial Q value of all leaves
+	states are redundant, which correspond to the same state in the real environment. Thus,
+	the efficiency of the algorithm will be reduced. Secondly, since the initial Q value of all leaves
 	is initialized with 0, the $\epsilon$-greedy policy may lead to overfitting. Because
-	the $\epsilon$-greedy policy of USM treats the second best and the worst the same, it drastically
-	decrease the probability to explore other actions which may get higher reward. For example,
+	the $\epsilon$-greedy policy of USM tend to utilize the experience led to local optimum, it drastically
+	decrease the probability to explore other actions which may get higher long-term reward. For example,
 	we found that in the first few steps, the agent may get negative default return after
 	choosing actions at some states, which decreases the probability of exploring those actions
-	when at those states again.
+	when at those states again, even if they should bring higher long-term reward.
 	
 	\section{Compressed Suffix Memory Algorithm}
 	
@@ -425,13 +419,13 @@
 			\hline
 			\textbf{Problem}&\textbf{$|S|$}&\textbf{$|A|$}&\textbf{$|\Omega|$}&\textbf{$r_d$}&\textbf{$r_p$}&\textbf{$r_g$}	\\
 			\hline
-			\textbf{Tiger-Grid}&9      & 4              & 7           & -0.1  & -4    & 16  \\
+			\textbf{Tiger-Grid}      &9         & 4        & 7           & -0.1    & -4    & 16  \\
 %			\hline
-			\textbf{Hallway}         & 15             & 4              & 4           & -0.1  &     & 32  \\
+			\textbf{Hallway}         & 15       & 4        & 4           & -0.1    & 0     & 32  \\
 %			\hline
-			\textbf{McCallum}       & 23             & 4              & 9           & -0.1  &     & 18  \\
-%			\hline
-			\textbf{Prim Maze}       & 154            & 4              & 16          & -0.1  &    & 96  \\
+			\textbf{McCallum}        & 23       & 4        & 9           & -0.1    & 0     & 18  \\
+%			\hline 
+			\textbf{Prim Maze}       & 154      & 4        & 16          & -0.1    & 0     & 96  \\
 			\hline
 		\end{tabular}
 		\label{table:benchmarks}
