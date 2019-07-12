@@ -59,14 +59,14 @@
 	\end{abstract}
 	
 	\begin{IEEEkeywords}
-		keyword1, keyword2, keyword3
+		pomdp, usm, csm
 	\end{IEEEkeywords}
 	
 	
 	\section{Introduction}
 	
 	Reinforcement learning is learning what to do—how to map situations to actions—so
-	as to maximize a numerical reward signal in a provided environment
+	as to maximize a reward in an unexplored environment
 	\cite{sutton2018reinforcement}. In many reinforcement learning scenarios such as
 	robotic exploration \cite{smith2007probabilistic} and autonomous driving
 	\cite{bai2015intention}, the agent is only able to gain partial and noisy
@@ -80,7 +80,7 @@
 	Many instance-based methods have been put forward, including Nearest Sequence
 	Memory (NSM) algorithm \cite{mccallum1997reinforcement} and Utile Suffix Memory
 	(USM) algorithm \cite{mccallum1995instance}. USM algorithm presents the state space by
-	tree-nodes in a suffix tree building from the instance chains, and effectively
+	tree-nodes in a suffix tree built from the instance chains, and effectively
 	makes decisions according to the Q-value of actions. However, the state space of USM
 	algorithm exponentially expands during iteration and comprises many redundant
 	states, which reduces the efficiency. Furthermore, because the $\epsilon$-greedy
@@ -88,13 +88,13 @@
 	overfitting.
 	
 	In this paper, we propose a new algorithm, called Compressed Suffix Memory (CSM)
-	algorithm, which optimizes the generation of a utile tree and decision process.
-	First, the heuristic information is obtained by the blind exploration
-	of the environment, e.g., $l$ as the effective path length from start to goal
-	and $p$ as the probability of goal during the exploration. Second, the maximum
-	depth of the suffix tree is limited to $2l$ and the minimum instances required
+	algorithm, which optimizes the generation of a utile tree and decision process based
+	on the overall information of the environment. First, the heuristic information
+	is obtained by the blind exploration of the environment, e.g., $l$ as the effective path
+	length from start to goal and $p$ as the probability of goal during the exploration.
+	Second, the maximum depth of the suffix tree is limited to $2l$ and the minimum instances required
 	to trigger state splitting, the threshold $b$, is deduced from $p$. Finally, after initializing the agent
-	with a random policy, Boltzmann sampling approach will be applied. Experiment
+	with a random policy, Boltzmann sampling approach will be applied to make decisions. Experiment
 	results of four benchmarks have shown that both the efficiency and the effect
 	have been greatly improved by CSM algorithm compared with USM algorithm.
 	
@@ -110,7 +110,7 @@
 	\subsection{Reinforcement Learning in Partially Observable Environment}
 	
 	Reinforcement learning is about how an agent learning to map states to actions
-	and produce a maximized reward in a provided environment. In general, a
+	and produce a maximized reward in an unexplored environment. In general, a
 	reinforcement learning agent interacts with the environment over time.
 	At each time step $t$, it determines its state $s_t$ from a state space $S$,
 	and chooses a best action $a_t$ from an action space $A$ according to the policy
@@ -242,13 +242,15 @@
 	In addition, more overall information should be considered.
 	
 	\begin{enumerate}
-		\item The depth of the suffix tree should be constrained. The $3^\textnormal{rd}$ Quartile of
-		path lengths to goal and the maximum tree depth are denoted as $l_3$ and $d$. Leaves with suffix longer
-		than $2l_3$ are considered redundant. However, the exploitation of immature policy can cause overfitting,
-		which makes $d$ grows greater than $2l_3$. So, an alterable guardian depth $l$ is needed.
-		On the one hand, $l$ starts with a relatively small value and will gradually get closer
-		to $l_3$ through learning. On the other hand, $2l$ should always greater than $d$.
-		The initial $l$ is set as:
+		\item The depth of the suffix tree should be constrained. In order to limit the tree growth and
+		dense the instances in the nodes. The maximum tree depth, denoted as $d$, should not be greater
+		than the doubled length of effective paths to goal. In order to resist extreme data and be suitable for most
+		paths, the $3^\textnormal{rd}$ Quartile is used to present the length of effective paths to goal, which is
+		denoted as $l_3$. Leaves with suffix longer than $2l_3$ are considered redundant. However,
+		the exploitation of immature policy can cause overfitting, which makes $d$ grows greater than $2l_3$.
+		So, an alterable guardian depth $l$ is needed. On the one hand, $l$ starts with a relatively
+		small value and will gradually get closer to $l_3$ through learning. On the other hand, $2l$
+		should always greater than $d$. The initial $l$ is set as:
 		\begin{equation}
 		l = \max{L_T}/2,
 		\end{equation}
@@ -267,8 +269,7 @@
 		$b$ is strongly correlated with $p$. Agent is encouraged to match longer suffix when
 		problem scale is bigger. Therefore, the smaller the $p$ is, the smaller the $b$ is set.
 		
-		\item More overall information should be taken into account. The main problem of
-		$\epsilon$-greedy approach is that it lacks the exploitation of overall information,
+		\item The main problem of $\epsilon$-greedy approach is that it lacks the exploitation of overall information,
 		such as those Q-value which is not the maximum. We use Boltzmann sampling to balance between
 		exploration and exploitation, which assigns actions with similar Q-value similar executing
 		probabilities to encourage agent to exploit them all, rather than only the best.
